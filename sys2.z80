@@ -222,7 +222,7 @@ X4e75:	jr	X4e7f
 	ld	a,c
 	cp	b
 	jr	z,X4e1b
-	ld	b,(iy+0x88)
+	ld	b,(iy-0x78)
 	ld	c,b
 X4e7f:	ld	(X4e0a),bc
 	push	bc
@@ -314,7 +314,7 @@ X4f04:	djnz	X4efa
 	inc	hl
 	push	hl
 	ld	hl,(X51d8)
-	bit	7,(iy+0xec)
+	bit	7,(iy-0x14)
 	jr	z,X4f2f
 	or	a
 	sbc	hl,de
@@ -351,7 +351,7 @@ X4f44:	inc	hl
 	ld	(hl),d
 	inc	hl
 	inc	hl
-	ld	a,(iy+0x88)
+	ld	a,(iy-0x78)
 	ld	(hl),a
 	inc	hl
 	ld	(hl),0x0
@@ -401,7 +401,7 @@ X4f82:	ld	a,0x3d
 	inc	de
 	push	de
 	call	X50b4
-	ld	b,(iy+0x8f)
+	ld	b,(iy-0x71)
 	ld	c,0x1
 	ld	e,(hl)
 	inc	e
@@ -448,16 +448,16 @@ X4fd3:	ld	a,(hl)
 X4fdb:	rlc	c
 	djnz	X4fd3
 	inc	l
-	ld	b,(iy+0x8f)
+	ld	b,(iy-0x71)
 	ld	c,0x1
 X4fe5:	ld	a,l
-	cp	(iy+0x8b)
+	cp	(iy-0x75)
 	jr	c,X4fd3
 	ex	af,af'
 	dec	a
 	ld	l,a
 	jr	z,X4fd0
-	bit	0,(iy+0xeb)
+	bit	0,(iy-0x15)
 	jr	nz,X502a
 	call	X508c
 	ld	a,0x1b
@@ -468,7 +468,7 @@ X4ffd:	inc	a
 	ld	a,l
 	ld	(de),a
 	inc	de
-	ld	a,(iy+0x8f)
+	ld	a,(iy-0x71)
 	sub	b
 	rrca
 	rrca
@@ -486,7 +486,7 @@ X500b:	inc	a
 	or	l
 	ex	(sp),hl
 	jr	nz,X4fdb
-	ld	a,(iy+0xeb)
+	ld	a,(iy-0x15)
 	and	0x3
 	jr	nz,X502a
 	ex	(sp),hl
@@ -494,10 +494,10 @@ X500b:	inc	a
 	inc	hl
 	inc	hl
 	ex	(sp),hl
-	set	0,(iy+0xeb)
+	set	0,(iy-0x15)
 	jr	X4fdb
 ;
-X502a:	res	0,(iy+0xeb)
+X502a:	res	0,(iy-0x15)
 	call	X508c
 	pop	af
 	pop	af
@@ -521,7 +521,7 @@ X504c:	inc	de
 	ld	a,(de)
 	inc	a
 	jr	z,X4fd3
-	bit	0,(iy+0xeb)
+	bit	0,(iy-0x15)
 	jr	nz,X502a
 	push	hl
 	push	bc
@@ -732,6 +732,8 @@ X515c:	push	bc
 	db	0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0
 	db	0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0
 	db	0x0,0x0,0x0,0x0,0x0
+
+X51ad	ds	32
 ;
 ;	Miscellaneous equates
 ;
@@ -784,6 +786,5 @@ X51df	equ	0x51df
 X51e0	equ	0x51e0
 Xffff	equ	0xffff
 ;
-	end
+	end	0x4d00
 ;
-
