@@ -45,22 +45,23 @@ X4d32:	push	de
 	ld	(hl),0x18
 	jr	z,X4d77
 	cp	0x18
-	call	z,X494b
+	call	z,0x494b
 	ret	nz
 	ld	a,l
 	add	a,0x5
 	ld	l,a
 	ex	de,hl
 	ld	hl,X51cd
-	ld	bc,X000b
+	ld	bc,0x000b
 	ldir
-	call	X491f
+	call	0x491f
 	ld	a,0x1
-	call	z,X490a
+	call	z,0x490a
 	ret	nz
 	ld	l,(ix+0x7)
 	ld	(hl),0x0
-	jp	X491f
+X4d6e	equ	$-1
+	jp	0x491f
 ;
 X4d72:	call	X4dbd
 	ret	nz
@@ -69,19 +70,19 @@ X4d77:	ld	a,0x35
 	or	a
 	ret
 ;
-X4d7b:	call	X4cd5
+X4d7b:	call	0x4cd5
 	ret	c
 	pop	af
 X4d80:	ex	(sp),hl
 	call	X4d92
-	jp	nz,X4409
+	jp	nz,0x4409
 	ex	(sp),hl
-	ld	a,(X4369)
+	ld	a,(0x4369)
 	rlca
-	jp	c,X440d
-	jp	X4c20
+	jp	c,0x440d
+	jp	0x4c20
 ;
-X4d92:	ld	hl,X4200
+X4d92:	ld	hl,0x4200
 	call	X4e2c
 	jr	z,X4da0
 	cp	0x18
@@ -101,8 +102,8 @@ X4da0:	ex	de,hl
 	ld	a,0x25
 	ld	(hl),0x2d
 	dec	hl
-	call	nc,X4c28
-	ld	(X4403),hl
+	call	nc,0x4c28
+	ld	(0x4403),hl
 	ex	de,hl
 	pop	hl
 	pop	bc
@@ -115,14 +116,14 @@ X4dbd:	call	X4e2e
 	ret	z
 	cp	0x18
 	ret	nz
-	call	X4986
+	call	0x4986
 	ld	bc,(X4e0a)
 	ld	a,b
 	cp	c
 	jr	z,X4dd2
-	ld	a,(X43a1)
+	ld	a,(0x43a1)
 X4dd2:	ld	(X4e0e),a
-	call	X47ec
+	call	0x47ec
 	jr	nz,X4de3
 	ld	hl,X4d6e
 	ld	b,(hl)
@@ -140,17 +141,19 @@ X4dea:	ld	(X4f56),a
 	inc	hl
 	ex	de,hl
 	ld	hl,X51cd
-	ld	bc,X000f
+	ld	bc,0x000f
 	ldir
-	call	X491f
+	call	0x491f
 	ret	nz
 	call	X4f2e
 	scf
 	ret
 ;
-X4e09:	ld	hl,X0000
+X4e09:	ld	hl,0
+X4e0a	equ	$-2
 	ld	d,a
 	ld	a,0x0
+X4e0e	equ	$-1
 	inc	a
 	cp	l
 	ret	c
@@ -178,7 +181,7 @@ X4e1f:	inc	hl
 	ret
 ;
 X4e2c:	ld	b,0x0
-X4e2e:	call	X4986
+X4e2e:	call	0x4986
 	ld	(X4f48),hl
 	ld	a,b
 	ld	(X4f5e),a
@@ -241,19 +244,19 @@ X4e93:	xor	(hl)
 X4e9b:	ld	(X4d6e),a
 	pop	af
 X4e9f:	ld	(X4e0e),a
-	call	X47ec
+	call	0x47ec
 	jr	z,X4eae
 X4ea7:	ld	e,0x18
 	call	X4e09
 	jr	X4e9f
 ;
 X4eae:	ld	de,X51ad
-	ld	bc,X001f
+	ld	bc,0x001f
 X4eb4:	ld	a,b
 	sub	c
 	jr	z,X4ea7
 	ld	a,0x1
-	call	X490a
+	call	0x490a
 	ret	nz
 	ld	a,b
 X4ebf:	ld	b,a
@@ -279,7 +282,7 @@ X4ed8:	ld	a,e
 X4edd:	dec	de
 	ld	a,(de)
 	ld	(X4f56),a
-	call	X492f
+	call	0x492f
 	ret	nz
 	push	de
 	push	bc
@@ -322,6 +325,7 @@ X4f04:	djnz	X4efa
 	add	hl,de
 	ld	a,0x7
 	and	0x0
+X4f24	equ	$-1
 	sbc	hl,bc
 	jr	z,X4f30
 	pop	hl
@@ -344,7 +348,9 @@ X4f30:	push	ix
 	set	7,(hl)
 X4f44:	inc	hl
 	ld	(hl),0x0
-	ld	de,X0000
+X4f46	equ	$-1
+	ld	de,0
+X4f48	equ	$-2
 	inc	hl
 	ld	(hl),e
 	inc	hl
@@ -355,12 +361,15 @@ X4f44:	inc	hl
 	ld	(hl),a
 	inc	hl
 	ld	(hl),0x0
+X4f56	equ	$-1
 	ld	a,0x0
+X4f58	equ	$-1
 	inc	hl
 	or	a
 	ld	(hl),a
 	inc	hl
 	ld	(hl),0x0
+X4f5e	equ	$-1
 	inc	hl
 	inc	hl
 	inc	hl
@@ -391,12 +400,12 @@ X4f7a:	ld	a,0x8
 ;
 X4f82:	ld	a,0x3d
 	bit	7,(ix+0x2)
-	call	z,X476e
+	call	z,0x476e
 	jr	nz,X4ffb
-	ld	a,(X486a)
+	ld	a,(0x486a)
 	ld	(X505e),a
 	push	af
-	call	X4936
+	call	0x4936
 	call	X5036
 	inc	de
 	push	de
@@ -431,7 +440,7 @@ X4fbf:	rlc	c
 	jr	nz,X4fbf
 X4fc5:	push	hl
 	xor	a
-	call	X490a
+	call	0x490a
 	jr	nz,X4ffb
 	ld	l,e
 	pop	de
@@ -501,13 +510,13 @@ X502a:	res	0,(iy-0x15)
 	call	X508c
 	pop	af
 	pop	af
-X5033:	call	X492f
+X5033:	call	0x492f
 X5036:	jr	nz,X503d
 	bit	4,(hl)
 	ret	nz
 	ld	a,0x2c
-X503d:	call	X4c20
-	jp	X49cd
+X503d:	call	0x4c20
+	jp	0x49cd
 ;
 X5043:	inc	de
 	ld	a,(de)
@@ -527,6 +536,7 @@ X504c:	inc	de
 	push	bc
 	call	X508c
 	ld	b,0x0
+X505e	equ	$-1
 	ld	l,b
 	push	bc
 	call	X50cf
@@ -562,7 +572,7 @@ X508c:	call	X50ae
 	push	hl
 	push	ix
 	pop	hl
-	ld	bc,X000e
+	ld	bc,0x000e
 	add	hl,bc
 	ld	de,X51ad
 	push	de
@@ -570,7 +580,7 @@ X508c:	call	X50ae
 	pop	hl
 	pop	de
 	call	X4f7a
-X50ae:	call	X491f
+X50ae:	call	0x491f
 	ret	z
 	jr	X503d
 ;
@@ -591,13 +601,13 @@ X50c2:	dec	hl
 	ret
 ;
 X50ca:	ld	a,d
-	call	X4776
+	call	0x4776
 	ret	nz
 X50cf:	ex	de,hl
 	ld	a,0x1
-	call	X490a
+	call	0x490a
 	ret	nz
-	ld	a,(X421f)
+	ld	a,(0x421f)
 	add	a,0x8
 	ld	c,a
 	ld	a,b
@@ -630,16 +640,16 @@ X50f2:	ld	a,l
 X50fe:	ld	a,(de)
 	ld	(hl),a
 	ld	c,l
-	call	X491f
+	call	0x491f
 	ret	nz
 	ld	a,c
-	call	X4936
+	call	0x4936
 	ret	nz
 	bit	4,(hl)
 	ld	a,0x2c
 	ret	nz
 	ld	a,c
-X5110:	ld	bc,X0a16
+X5110:	ld	bc,0x0a16
 	push	hl
 X5114:	ld	(hl),0x0
 	inc	hl
@@ -676,7 +686,7 @@ X5143:	djnz	X5140
 ;
 X5146:	inc	de
 	ld	a,(de)
-	call	X45b5
+	call	0x45b5
 	cp	0x41
 	ret	c
 	cp	0x5b
@@ -686,7 +696,7 @@ X5146:	inc	de
 X5152:	ld	hl,X51df
 X5155:	push	de
 	push	bc
-	ld	de,Xffff
+	ld	de,0xffff
 	ld	b,0x8
 X515c:	push	bc
 	ld	a,e
@@ -734,57 +744,13 @@ X515c:	push	bc
 	db	0x0,0x0,0x0,0x0,0x0
 
 X51ad	ds	32
+X51cd	ds	11
+X51d8	ds	2
+X51da	ds	2
+	ds	3
+X51df	ds	1
+X51e0	ds	32
 ;
-;	Miscellaneous equates
-;
-;  These are addresses referenced in the code but
-;  which are in the middle of a multibyte instruction
-;  or are addresses outside the initialized space
-;
-X0000	equ	0x0
-X000b	equ	0xb
-X000e	equ	0xe
-X000f	equ	0xf
-X001f	equ	0x1f
-X0a16	equ	0xa16
-X4200	equ	0x4200
-X421f	equ	0x421f
-X4369	equ	0x4369
-X43a1	equ	0x43a1
-X4403	equ	0x4403
-X4409	equ	0x4409
-X440d	equ	0x440d
-X45b5	equ	0x45b5
-X476e	equ	0x476e
-X4776	equ	0x4776
-X47ec	equ	0x47ec
-X486a	equ	0x486a
-X490a	equ	0x490a
-X491f	equ	0x491f
-X492f	equ	0x492f
-X4936	equ	0x4936
-X494b	equ	0x494b
-X4986	equ	0x4986
-X49cd	equ	0x49cd
-X4c20	equ	0x4c20
-X4c28	equ	0x4c28
-X4cd5	equ	0x4cd5
-X4d6e	equ	0x4d6e
-X4e0a	equ	0x4e0a
-X4e0e	equ	0x4e0e
-X4f24	equ	0x4f24
-X4f46	equ	0x4f46
-X4f48	equ	0x4f48
-X4f56	equ	0x4f56
-X4f58	equ	0x4f58
-X4f5e	equ	0x4f5e
-X505e	equ	0x505e
-X51cd	equ	0x51cd
-X51d8	equ	0x51d8
-X51da	equ	0x51da
-X51df	equ	0x51df
-X51e0	equ	0x51e0
-Xffff	equ	0xffff
 ;
 	end	0x4d00
 ;
