@@ -5,45 +5,45 @@
 	org	0x4d00
 ;
 	cp	0x24
-	jp	z,X4e2e
+	jp	z,j1002
 	cp	0x44
-	jp	z,X4dbd
+	jp	z,j0601
 	cp	0x64
-	jp	z,X4f82
+	jp	z,j1301
 	cp	0x84
-	jp	z,X5155
+	jp	z,j2202
 	cp	0xa4
-	jr	z,X4d92
+	jr	z,j0501
 	cp	0xc4
-	jr	z,X4d80
+	jr	z,j0402
 	cp	0xe4
-	jr	nz,X4d2e
+	jr	nz,j0101
 	dec	c
-	jr	z,X4d32
+	jr	z,j0201
 	dec	c
-	jp	z,X50ca
+	jp	z,j1901
 	dec	c
-	jr	z,X4d7b
+	jr	z,j0401
 	dec	c
-	jp	z,X4d72
-X4d2e:	ld	a,0x2a
-X4d30:	or	a
+	jp	z,j0301
+j0101:	ld	a,0x2a
+j0102:	or	a
 	ret
 ;
-X4d32:	push	de
+j0201:	push	de
 	pop	ix
 	inc	de
 	ld	a,(de)
 	and	0x7
 	cp	0x3
 	ld	a,0x25
-	jr	nc,X4d30
-	ld	hl,X4e75
+	jr	nc,j0102
+	ld	hl,j1006
 	ld	(hl),0x3e
 	ld	de,X51e0
-	call	X4e2c
+	call	j1001
 	ld	(hl),0x18
-	jr	z,X4d77
+	jr	z,j0302
 	cp	0x18
 	call	z,0x494b
 	ret	nz
@@ -63,18 +63,18 @@ X4d32:	push	de
 X4d6e	equ	$-1
 	jp	0x491f
 ;
-X4d72:	call	X4dbd
+j0301:	call	j0601
 	ret	nz
 	ret	c
-X4d77:	ld	a,0x35
+j0302:	ld	a,0x35
 	or	a
 	ret
 ;
-X4d7b:	call	0x4cd5
+j0401:	call	0x4cd5
 	ret	c
 	pop	af
-X4d80:	ex	(sp),hl
-	call	X4d92
+j0402:	ex	(sp),hl
+	call	j0501
 	jp	nz,0x4409
 	ex	(sp),hl
 	ld	a,(0x4369)
@@ -82,15 +82,15 @@ X4d80:	ex	(sp),hl
 	jp	c,0x440d
 	jp	0x4c20
 ;
-X4d92:	ld	hl,0x4200
-	call	X4e2c
-	jr	z,X4da0
+j0501:	ld	hl,0x4200
+	call	j1001
+	jr	z,j0502
 	cp	0x18
 	ret	nz
 	add	a,0x7
 	ret
 ;
-X4da0:	ex	de,hl
+j0502:	ex	de,hl
 	inc	hl
 	ld	a,(hl)
 	push	af
@@ -112,7 +112,7 @@ X4da0:	ex	de,hl
 	ex	de,hl
 	ret
 ;
-X4dbd:	call	X4e2e
+j0601:	call	j1002
 	ret	z
 	cp	0x18
 	ret	nz
@@ -120,22 +120,22 @@ X4dbd:	call	X4e2e
 	ld	bc,(X4e0a)
 	ld	a,b
 	cp	c
-	jr	z,X4dd2
+	jr	z,j0602
 	ld	a,(0x43a1)
-X4dd2:	ld	(X4e0e),a
+j0602:	ld	(X4e0e),a
 	call	0x47ec
-	jr	nz,X4de3
+	jr	nz,j0603
 	ld	hl,X4d6e
 	ld	b,(hl)
-	call	X50cf
-	jr	z,X4dea
-X4de3:	ld	e,0x1a
-	call	X4e09
-	jr	X4dd2
+	call	j1902
+	jr	z,j0604
+j0603:	ld	e,0x1a
+	call	j0701
+	jr	j0602
 ;
-X4dea:	ld	(X4f56),a
+j0604:	ld	(X4f56),a
 	ld	(hl),0x10
-	call	X4e1f
+	call	j0901
 	ld	a,(X4f5e)
 	ld	(hl),a
 	inc	hl
@@ -145,11 +145,11 @@ X4dea:	ld	(X4f56),a
 	ldir
 	call	0x491f
 	ret	nz
-	call	X4f2e
+	call	j1101
 	scf
 	ret
 ;
-X4e09:	ld	hl,0
+j0701:	ld	hl,0
 X4e0a	equ	$-2
 	ld	d,a
 	ld	a,0x0
@@ -158,19 +158,19 @@ X4e0e	equ	$-1
 	cp	l
 	ret	c
 	pop	hl
-	jr	z,X4e18
+	jr	z,j0702
 	ld	a,d
 	or	a
 	ret	nz
-X4e18:	ld	a,e
+j0702:	ld	a,e
 	or	a
 	ret
 ;
-X4e1b:	ld	a,0x20
+j0801:	ld	a,0x20
 	or	a
 	ret
 ;
-X4e1f:	inc	hl
+j0901:	inc	hl
 	ld	a,(hl)
 	ld	(X4f46),a
 	inc	hl
@@ -180,106 +180,106 @@ X4e1f:	inc	hl
 	inc	hl
 	ret
 ;
-X4e2c:	ld	b,0x0
-X4e2e:	call	0x4986
+j1001:	ld	b,0x0
+j1002:	call	0x4986
 	ld	(X4f48),hl
 	ld	a,b
 	ld	(X4f5e),a
 	ld	hl,X51cd
 	dec	de
 	xor	a
-	call	X5121
+	call	j2001
 	cp	0x2f
 	ld	b,0x3
-	call	X5123
+	call	j2002
 	cp	0x2e
-	call	X5121
+	call	j2001
 	ld	b,0x0
 	ld	c,(iy+0x1f)
 	cp	0x3a
-	jr	nz,X4e75
+	jr	nz,j1006
 	inc	de
 	ld	a,(de)
 	sub	0x30
 	cp	0xa
-	jr	nc,X4e1b
-X4e5d:	ld	c,a
+	jr	nc,j0801
+j1003:	ld	c,a
 	inc	de
 	ld	a,(de)
 	sub	0x30
 	cp	0xa
-	jr	nc,X4e74
+	jr	nc,j1005
 	ld	l,a
 	ld	a,c
 	ld	b,0x9
-X4e6a:	add	a,c
-	jr	c,X4e1b
-	djnz	X4e6a
+j1004:	add	a,c
+	jr	c,j0801
+	djnz	j1004
 	add	a,l
-	jr	nc,X4e5d
-	jr	X4e1b
+	jr	nc,j1003
+	jr	j0801
 ;
-X4e74:	ld	b,c
-X4e75:	jr	X4e7f		; This instruction is modified to "LD A,0x08"
+j1005:	ld	b,c
+j1006:	jr	j1007		; This instruction is modified to "LD A,0x08"
 ;
 	ld	a,c
 	cp	b
-	jr	z,X4e1b
+	jr	z,j0801
 	ld	b,(iy-0x78)
 	ld	c,b
-X4e7f:	ld	(X4e0a),bc
+j1007:	ld	(X4e0a),bc
 	push	bc
-	call	X5152
+	call	j2201
 	ld	(X51d8),hl
 	ld	(X51da),hl
 	ld	hl,X51cd
 	ld	b,0xb
 	xor	a
-X4e93:	xor	(hl)
+j1008:	xor	(hl)
 	inc	hl
 	rlca
-	djnz	X4e93
-	jr	nz,X4e9b
+	djnz	j1008
+	jr	nz,j1009
 	inc	a
-X4e9b:	ld	(X4d6e),a
+j1009:	ld	(X4d6e),a
 	pop	af
-X4e9f:	ld	(X4e0e),a
+j1010:	ld	(X4e0e),a
 	call	0x47ec
-	jr	z,X4eae
-X4ea7:	ld	e,0x18
-	call	X4e09
-	jr	X4e9f
+	jr	z,j1012
+j1011:	ld	e,0x18
+	call	j0701
+	jr	j1010
 ;
-X4eae:	ld	de,X51ad
+j1012:	ld	de,X51ad
 	ld	bc,0x001f
-X4eb4:	ld	a,b
+j1013:	ld	a,b
 	sub	c
-	jr	z,X4ea7
+	jr	z,j1011
 	ld	a,0x1
 	call	0x490a
 	ret	nz
 	ld	a,b
-X4ebf:	ld	b,a
+j1014:	ld	b,a
 	ld	(de),a
 	ld	l,a
 	ld	a,e
 	cp	0xcc
-	jr	z,X4edd
+	jr	z,j1017
 	ld	a,(X4d6e)
 	cp	(hl)
-	jr	nz,X4ece
+	jr	nz,j1015
 	inc	de
-X4ece:	ld	a,b
+j1015:	ld	a,b
 	add	a,0x20
-	jr	nc,X4ebf
+	jr	nc,j1014
 	inc	a
 	cp	c
 	ld	b,a
-	jr	c,X4ebf
-X4ed8:	ld	a,e
+	jr	c,j1014
+j1016:	ld	a,e
 	cp	0xad
-	jr	z,X4eb4
-X4edd:	dec	de
+	jr	z,j1013
+j1017:	dec	de
 	ld	a,(de)
 	ld	(X4f56),a
 	call	0x492f
@@ -290,20 +290,20 @@ X4edd:	dec	de
 	ld	(X4f24),a
 	and	0x90
 	cp	0x10
-	jr	nz,X4f00
-	call	X4e1f
+	jr	nz,j1019
+	call	j0901
 	ld	de,X51cd
 	ld	b,0xb
-X4efa:	inc	hl
+j1018:	inc	hl
 	ld	a,(de)
 	cp	(hl)
 	inc	de
-	jr	z,X4f04
-X4f00:	pop	bc
+	jr	z,j1020
+j1019:	pop	bc
 	pop	de
-	jr	X4ed8
+	jr	j1016
 ;
-X4f04:	djnz	X4efa
+j1020:	djnz	j1018
 	pop	bc
 	pop	de
 	inc	hl
@@ -318,35 +318,35 @@ X4f04:	djnz	X4efa
 	push	hl
 	ld	hl,(X51d8)
 	bit	7,(iy-0x14)
-	jr	z,X4f2f
+	jr	z,j1102
 	or	a
 	sbc	hl,de
-	jr	z,X4f2f
+	jr	z,j1102
 	add	hl,de
 	ld	a,0x7
 	and	0x0
 X4f24	equ	$-1
 	sbc	hl,bc
-	jr	z,X4f30
+	jr	z,j1103
 	pop	hl
 	ld	a,0x19
 	or	a
 	ret
 ;
-X4f2e:	push	de
-X4f2f:	xor	a
-X4f30:	push	ix
+j1101:	push	de
+j1102:	xor	a
+j1103:	push	ix
 	pop	hl
-	call	X5110
+	call	j1908
 	ld	(hl),0x80
 	inc	hl
 	or	0x28
 	ld	(hl),a
 	ld	a,(X4f5e)
 	or	a
-	jr	z,X4f44
+	jr	z,j1104
 	set	7,(hl)
-X4f44:	inc	hl
+j1104:	inc	hl
 	ld	(hl),0x0
 X4f46	equ	$-1
 	ld	de,0
@@ -376,9 +376,9 @@ X4f5e	equ	$-1
 	pop	de
 	ld	a,(de)
 	inc	de
-	jr	z,X4f69
+	jr	z,j1105
 	sub	0x1
-X4f69:	ld	(hl),a
+j1105:	ld	(hl),a
 	inc	hl
 	ld	a,(de)
 	sbc	a,0x0
@@ -387,34 +387,34 @@ X4f69:	ld	(hl),a
 	inc	hl
 	ld	a,0x2c
 	ret	c
-	call	X4f79
+	call	j1201
 	xor	a
 	ret
 ;
-X4f79:	ex	de,hl
-X4f7a:	ld	a,0x8
+j1201:	ex	de,hl
+j1202:	ld	a,0x8
 	ld	c,a
 	ld	b,0x0
 	ldir
 	ret
 ;
-X4f82:	ld	a,0x3d
+j1301:	ld	a,0x3d
 	bit	7,(ix+0x2)
 	call	z,0x476e
-	jr	nz,X4ffb
+	jr	nz,j1404
 	ld	a,(0x486a)
 	ld	(X505e),a
 	push	af
 	call	0x4936
-	call	X5036
+	call	j1601
 	inc	de
 	push	de
-	call	X50b4
+	call	j1801
 	ld	b,(iy-0x71)
 	ld	c,0x1
 	ld	e,(hl)
 	inc	e
-	jr	z,X4fc5
+	jr	z,j1304
 	dec	e
 	dec	e
 	inc	hl
@@ -429,51 +429,51 @@ X4f82:	ld	a,0x3d
 	rlca
 	rlca
 	add	a,d
-X4fb8:	inc	e
+j1302:	inc	e
 	sub	b
-	jr	nc,X4fb8
+	jr	nc,j1302
 	add	a,b
-	jr	z,X4fc5
-X4fbf:	rlc	c
+	jr	z,j1304
+j1303:	rlc	c
 	dec	b
 	dec	a
-	jr	nz,X4fbf
-X4fc5:	push	hl
+	jr	nz,j1303
+j1304:	push	hl
 	xor	a
 	call	0x490a
-	jr	nz,X4ffb
+	jr	nz,j1404
 	ld	l,e
 	pop	de
 	ld	a,0x1
-X4fd0:	ex	af,af'
-	jr	X4fe5
+j1305:	ex	af,af'
+	jr	j1403
 ;
-X4fd3:	ld	a,(hl)
+j1401:	ld	a,(hl)
 	and	c
 	ld	a,(de)
-	jr	z,X4ffd
+	jr	z,j1405
 	inc	a
-	jr	nz,X504c
-X4fdb:	rlc	c
-	djnz	X4fd3
+	jr	nz,j1604
+j1402:	rlc	c
+	djnz	j1401
 	inc	l
 	ld	b,(iy-0x71)
 	ld	c,0x1
-X4fe5:	ld	a,l
+j1403:	ld	a,l
 	cp	(iy-0x75)
-	jr	c,X4fd3
+	jr	c,j1401
 	ex	af,af'
 	dec	a
 	ld	l,a
-	jr	z,X4fd0
+	jr	z,j1305
 	bit	0,(iy-0x15)
-	jr	nz,X502a
-	call	X508c
+	jr	nz,j1407
+	call	j1701
 	ld	a,0x1b
-X4ffb:	jr	X503d
+j1404:	jr	j1602
 ;
-X4ffd:	inc	a
-	jr	nz,X5043
+j1405:	inc	a
+	jr	nz,j1603
 	ld	a,l
 	ld	(de),a
 	inc	de
@@ -483,7 +483,7 @@ X4ffd:	inc	a
 	rrca
 	rrca
 	dec	a
-X500b:	inc	a
+j1406:	inc	a
 	ld	(de),a
 	dec	de
 	ld	a,(hl)
@@ -494,78 +494,78 @@ X500b:	inc	a
 	ld	a,h
 	or	l
 	ex	(sp),hl
-	jr	nz,X4fdb
+	jr	nz,j1402
 	ld	a,(iy-0x15)
 	and	0x3
-	jr	nz,X502a
+	jr	nz,j1407
 	ex	(sp),hl
 	inc	hl
 	inc	hl
 	inc	hl
 	ex	(sp),hl
 	set	0,(iy-0x15)
-	jr	X4fdb
+	jr	j1402
 ;
-X502a:	res	0,(iy-0x15)
-	call	X508c
+j1407:	res	0,(iy-0x15)
+	call	j1701
 	pop	af
 	pop	af
-X5033:	call	0x492f
-X5036:	jr	nz,X503d
+j1501:	call	0x492f
+j1601:	jr	nz,j1602
 	bit	4,(hl)
 	ret	nz
 	ld	a,0x2c
-X503d:	call	0x4c20
+j1602:	call	0x4c20
 	jp	0x49cd
 ;
-X5043:	inc	de
+j1603:	inc	de
 	ld	a,(de)
 	inc	a
 	and	0x1f
 	ld	a,(de)
-	jr	nz,X500b
+	jr	nz,j1406
 	dec	de
-X504c:	inc	de
+j1604:	inc	de
 	inc	de
 	ld	a,(de)
 	inc	a
-	jr	z,X4fd3
+	jr	z,j1401
 	bit	0,(iy-0x15)
-	jr	nz,X502a
+	jr	nz,j1407
 	push	hl
 	push	bc
-	call	X508c
+	call	j1701
 	ld	b,0x0
 X505e	equ	$-1
 	ld	l,b
 	push	bc
-	call	X50cf
-	jr	nz,X503d
+	call	j1902
+	jr	nz,j1602
 	ld	c,a
 	ld	(hl),0x90
 	inc	hl
 	pop	de
 	ld	(hl),d
-	call	X50ae
+	call	j1702
 	ld	a,d
-	call	X5033
+	call	j1501
 	add	a,0x1f
 	ld	l,a
 	ld	(hl),c
 	dec	hl
 	ld	(hl),0xfe
-	call	X50ae
+	call	j1702
 	ld	a,c
 	ld	(X505e),a
-	call	X5033
-	call	X50b4
+	call	j1501
+	call	j1801
 	pop	bc
 	pop	de
-	jp	X4fc5
+	jp	j1304
 ;
-X508c:	call	X50ae
+j1701:	call	j1702
 	ld	a,(X505e)
-	call	X5033
+	call	j1501
 	add	a,0x16
 	bit	7,(hl)
 	ld	l,a
@@ -576,34 +576,34 @@ X508c:	call	X50ae
 	add	hl,bc
 	ld	de,X51ad
 	push	de
-	call	z,X4f79
+	call	z,j1201
 	pop	hl
 	pop	de
-	call	X4f7a
-X50ae:	call	0x491f
+	call	j1202
+j1702:	call	0x491f
 	ret	z
-	jr	X503d
+	jr	j1602
 ;
-X50b4:	add	a,0x16
+j1801:	add	a,0x16
 	ld	l,a
 	ld	de,X51ad
-	call	X4f7a
+	call	j1202
 	ex	de,hl
 	ld	(hl),0xfe
 	rrca
 	ld	b,a
-X50c2:	dec	hl
+j1802:	dec	hl
 	dec	hl
 	ld	a,(hl)
 	inc	a
 	ret	nz
-	djnz	X50c2
+	djnz	j1802
 	ret
 ;
-X50ca:	ld	a,d
+j1901:	ld	a,d
 	call	0x4776
 	ret	nz
-X50cf:	ex	de,hl
+j1902:	ex	de,hl
 	ld	a,0x1
 	call	0x490a
 	ret	nz
@@ -612,32 +612,32 @@ X50cf:	ex	de,hl
 	ld	c,a
 	ld	a,b
 	and	0x1f
-X50df:	sub	c
-	jr	nc,X50df
+j1903:	sub	c
+	jr	nc,j1903
 	add	a,c
-X50e3:	ld	b,a
+j1904:	ld	b,a
 	ld	l,a
-	jr	X50f2
+	jr	j1906
 ;
-X50e7:	ld	a,(hl)
+j1905:	ld	a,(hl)
 	or	a
-	jr	z,X50fe
+	jr	z,j1907
 	ld	a,l
 	add	a,0x20
 	ld	l,a
-	jr	nc,X50e7
+	jr	nc,j1905
 	inc	l
-X50f2:	ld	a,l
+j1906:	ld	a,l
 	cp	c
-	jr	c,X50e7
+	jr	c,j1905
 	xor	a
 	inc	b
 	dec	b
-	jr	nz,X50e3
+	jr	nz,j1904
 	or	0x1a
 	ret
 ;
-X50fe:	ld	a,(de)
+j1907:	ld	a,(de)
 	ld	(hl),a
 	ld	c,l
 	call	0x491f
@@ -649,42 +649,42 @@ X50fe:	ld	a,(de)
 	ld	a,0x2c
 	ret	nz
 	ld	a,c
-X5110:	ld	bc,0x0a16
+j1908:	ld	bc,0x0a16
 	push	hl
-X5114:	ld	(hl),0x0
+j1909:	ld	(hl),0x0
 	inc	hl
 	dec	c
-	jr	nz,X5114
-X511a:	ld	(hl),0xff
+	jr	nz,j1909
+j1910:	ld	(hl),0xff
 	inc	hl
-	djnz	X511a
+	djnz	j1910
 	pop	hl
 	ret
 ;
-X5121:	ld	b,0x8
-X5123:	jr	nz,X5140
-	call	X5146
-	jr	c,X513b
-X512a:	ld	(hl),a
+j2001:	ld	b,0x8
+j2002:	jr	nz,j2006
+	call	j2101
+	jr	c,j2005
+j2003:	ld	(hl),a
 	inc	hl
-	call	X5146
-	jr	nc,X5139
+	call	j2101
+	jr	nc,j2004
 	cp	0x30
-	jr	c,X5143
+	jr	c,j2007
 	cp	0x3a
-	jr	nc,X5143
-X5139:	djnz	X512a
-X513b:	pop	af
+	jr	nc,j2007
+j2004:	djnz	j2003
+j2005:	pop	af
 	ld	a,0x30
 	or	a
 	ret
 ;
-X5140:	ld	(hl),0x20
+j2006:	ld	(hl),0x20
 	inc	hl
-X5143:	djnz	X5140
+j2007:	djnz	j2006
 	ret
 ;
-X5146:	inc	de
+j2101:	inc	de
 	ld	a,(de)
 	call	0x45b5
 	cp	0x41
@@ -693,12 +693,12 @@ X5146:	inc	de
 	ccf
 	ret
 ;
-X5152:	ld	hl,X51df
-X5155:	push	de
+j2201:	ld	hl,X51df
+j2202:	push	de
 	push	bc
 	ld	de,0xffff
 	ld	b,0x8
-X515c:	push	bc
+j2203:	push	bc
 	ld	a,e
 	and	0x7
 	ld	c,a
@@ -731,7 +731,7 @@ X515c:	push	bc
 	ld	d,a
 	ld	(hl),0x20
 	dec	hl
-	djnz	X515c
+	djnz	j2203
 	ex	de,hl
 	pop	bc
 	pop	de
