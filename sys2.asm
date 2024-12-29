@@ -220,7 +220,7 @@ X4e6a:	add	a,c
 	jr	X4e1b
 ;
 X4e74:	ld	b,c
-X4e75:	jr	X4e7f
+X4e75:	jr	X4e7f		; This instruction is modified to "LD A,0x08"
 ;
 	ld	a,c
 	cp	b
