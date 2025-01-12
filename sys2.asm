@@ -1,20 +1,24 @@
+;  Newdos/80 Version 2.0 sys2/sys
 ;
-;  DZ80 V3.4.1 Z80 Disassembly of sys2.bin
-;  2024/12/29 13:34
-;
+;  "Creates files, opens FCBs, allocates file space, allocates FDEs, encodes
+;  passwords and loads users programs to be run. Executor for library commands RENAME
+;  and LOAD". -- https://www.trs-80.com/wordpress/reference/newdos-80-manual-4/
+
 	org	0x4d00
 ;
-	cp	0x24
+; On entry, register A contains the function code to be performed. The low 5
+; bits are 0x04 which refers to SYS2.
+	cp	0x24		; Open an FCB to an existing disk file
 	jp	z,j1002
-	cp	0x44
+	cp	0x44		; Open an FCB to a new or existing disk file
 	jp	z,j0601
 	cp	0x64
 	jp	z,j1301
 	cp	0x84
 	jp	z,j2202
-	cp	0xa4
+	cp	0xa4		; Load a program file
 	jr	z,j0501
-	cp	0xc4
+	cp	0xc4		; Load and start executing a program file
 	jr	z,j0402
 	cp	0xe4
 	jr	nz,j0101
@@ -26,7 +30,7 @@
 	jr	z,j0401
 	dec	c
 	jp	z,j0301
-j0101:	ld	a,0x2a
+j0101:	ld	a,0x2a		; DOSERR_ILLEGAL_DOS_FUNCTION
 j0102:	or	a
 	ret
 ;
@@ -54,14 +58,14 @@ j0201:	push	de
 	ld	hl,X51cd
 	ld	bc,0x000b
 	ldir
-	call	0x491f
+	call	0x491f		; Write a directory sector
 	ld	a,0x1
-	call	z,0x490a
+	call	z,0x490a	; Read a directory sector (register A)
 	ret	nz
 	ld	l,(ix+0x7)
 	ld	(hl),0x0
 X4d6e	equ	$-1
-	jp	0x491f
+	jp	0x491f		; Write a directory sector
 ;
 j0301:	call	j0601
 	ret	nz
@@ -70,19 +74,19 @@ j0302:	ld	a,0x35
 	or	a
 	ret
 ;
-j0401:	call	0x4cd5
-	ret	c
+j0401:	call	0x4cd5		; Bump HL to start of command-line arguments (skip comma and leading spaces)
+	ret	c		; C is set if HL pointed to some char other than CR or space?
 	pop	af
 j0402:	ex	(sp),hl
 	call	j0501
-	jp	nz,0x4409
+	jp	nz,0x4409	; DOS_ERROR
 	ex	(sp),hl
-	ld	a,(0x4369)
-	rlca
-	jp	c,0x440d
-	jp	0x4c20
+	ld	a,(0x4369)	; SYSTEM byte 1
+	rlca			; Test bit 7; C is set if DEBUG is enabled
+	jp	c,0x440d	; DOS_DEBUG
+	jp	0x4c20		; Reset GETSYS bit and return to caller
 ;
-j0501:	ld	hl,0x4200
+j0501:	ld	hl,0x4200	; DOS sector buffer
 	call	j1001
 	jr	z,j0502
 	cp	0x18
@@ -102,7 +106,7 @@ j0502:	ex	de,hl
 	ld	a,0x25
 	ld	(hl),0x2d
 	dec	hl
-	call	nc,0x4c28
+	call	nc,0x4c28	; Load a CMD file. Returns start address in HL; Z set if no error
 	ld	(0x4403),hl
 	ex	de,hl
 	pop	hl
@@ -263,7 +267,7 @@ j1014:	ld	b,a
 	ld	(de),a
 	ld	l,a
 	ld	a,e
-	cp	0xcc
+	cp	0xcc		; ZAP 040 was applied (0xcd -> 0xcc)
 	jr	z,j1017
 	ld	a,(X4d6e)
 	cp	(hl)
@@ -686,12 +690,12 @@ j2007:	djnz	j2006
 ;
 j2101:	inc	de
 	ld	a,(de)
-	call	0x45b5
+	call	0x45b5		; Convert register A lowercase to uppercase
 	cp	0x41
-	ret	c
+	ret	c		; C is set if A is not in the range [A-Za-z]
 	cp	0x5b
 	ccf
-	ret
+	ret			; C is set if A is not in the range [A-Za-z]
 ;
 j2201:	ld	hl,X51df
 j2202:	push	de
